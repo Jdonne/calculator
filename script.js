@@ -10,9 +10,48 @@
 //splice from index-1, 3 numbers add multiplied
 //do it for the rest of operations
 //return sole number 
-let inputs = [2,'+',12,'*',3,'/',4,'-',1]
+
+const display = document.querySelector('.display');
+const keypad = document.querySelector('.keypad')
+
+let inputs = [];
+
+keypad.addEventListener('click', displaynum)
+
+function displaynum(e) {
+    let clicked = e.target.innerText;
+    let lastnum = inputs[inputs.length-1];
+    
+    if (Number.isInteger(Number(clicked))) {
+        display.textContent = e.target.innerText;
+      
+    }
+    if ((Number.isInteger(Number(clicked))) && (Number.isInteger(Number(lastnum)))) {
+
+        inputs.push(inputs.pop()+clicked);
+        display.textContent = inputs[inputs.length-1];
+    }
+    
+    else if (clicked == '='){
+        operate();
+        display.textContent = inputs[0]
+    }
+    else if (clicked == 'clear'){
+        inputs = []
+        display.textContent = 0
+    }
+    else if (clicked == '*' || '+' || '-' || '/'){
+    inputs.push(clicked);}
+
+}
+
+
+
 let tempOp = 0
 function operate() {
+    inputs.forEach(function toNums(item,index,arr){ if (Number.isInteger(Number(item))){
+        arr[index] = parseInt(item)}})
+
     //MULTIPLICATION
     for (let i = 0; i <= inputs.length; i++) {
         let mIndex = inputs.indexOf('*')
@@ -59,25 +98,4 @@ function operate() {
     }
     return inputs
 }
-operate()
 
-// let inputs = []
-// let operator
-// let result
-// function operate(){
-//     for (let i = 0; i<=inputs.length; i++){
-// if (inputs[i]== '*'){
-// result = inputs[i-1]*inputs[i+1] 
-// } 
-// else if(inputs[i]== '/'){
-//     result = inputs[i-1]/inputs[i+1] 
-// }
-// else if (inputs[i]== '+'){
-//     result = inputs[i-1]+inputs[i+1] 
-// }
-// else if (inputs[i]== '-'){
-//     result = inputs[i-1]-inputs[i+1] 
-// }
-//     }
-
-// }
