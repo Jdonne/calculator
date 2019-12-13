@@ -1,6 +1,6 @@
 body{
-justify-content: center;
-align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 .display{
     
@@ -15,17 +15,28 @@ align-items: center;
     border-radius: 10px;
 }
 .keypad {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-width: 400px;
-margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin: auto;
 }
 
 button {
-width: 100px;
-height: 100px;
-font-size:xx-large ;
-border-radius: 5px;
+    width: 100px;
+    height: 100px;
+    font-size:xx-large ;
+    border-radius: 5px;
+}
+.op {
+    background-color: orangered;
+}
+
+#clear{
+    background-color: burlywood;
+}
+
+#equals {
+    background-color: burlywood;
 }
