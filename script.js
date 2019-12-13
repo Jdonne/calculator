@@ -1,56 +1,45 @@
-//var math_it_up = {
-//    '+': function (x, y) { return x + y },
-//    '-': function (x, y) { return x - y }
-//  }​​​​​​​;
-//  math_it_up['+'](1, 2) == 3;
-
-//inputs into array
-//['1','+','2','*','3']
-//find *, * indexes before and after
-//splice from index-1, 3 numbers add multiplied
-//do it for the rest of operations
-//return sole number 
-
 const display = document.querySelector('.display');
 const keypad = document.querySelector('.keypad')
-
 let inputs = [];
-
+let tempOp = 0;
 keypad.addEventListener('click', displaynum)
 
 function displaynum(e) {
     let clicked = e.target.innerText;
-    let lastnum = inputs[inputs.length-1];
-    
+    let lastnum = inputs[inputs.length - 1];
+
     if (Number.isInteger(Number(clicked))) {
         display.textContent = e.target.innerText;
-      
     }
     if ((Number.isInteger(Number(clicked))) && (Number.isInteger(Number(lastnum)))) {
-
-        inputs.push(inputs.pop()+clicked);
-        display.textContent = inputs[inputs.length-1];
+        inputs.push(inputs.pop() + clicked);
+        display.textContent = inputs[inputs.length - 1];
     }
-    
-    else if (clicked == '='){
+    else if (clicked == '=') {
         operate();
-        display.textContent = inputs[0]
+        if (typeof (inputs[0]) == 'string') {
+            display.textContent = 'error'
+        }
+        else {
+            display.textContent = Math.round(inputs[0] * 10000) / 10000;
+        }
     }
-    else if (clicked == 'clear'){
+    else if (clicked == 'clear') {
         inputs = []
         display.textContent = 0
     }
-    else if (clicked == '*' || '+' || '-' || '/'){
-    inputs.push(clicked);}
+    else if (clicked == '*' || '+' || '-' || '/') {
+        inputs.push(clicked);
+    }
 
 }
 
-
-
-let tempOp = 0
 function operate() {
-    inputs.forEach(function toNums(item,index,arr){ if (Number.isInteger(Number(item))){
-        arr[index] = parseInt(item)}})
+    inputs.forEach(function toNums(item, index, arr) {
+        if (Number.isInteger(Number(item))) {
+            arr[index] = parseInt(item)
+        }
+    })
 
     //MULTIPLICATION
     for (let i = 0; i <= inputs.length; i++) {
@@ -69,11 +58,16 @@ function operate() {
         if (dIndex == -1) {
             break
         }
-        else if (dIndex) {
+        else if (dIndex && inputs[(dIndex + 1)] === 0) {
+            inputs = ['error']
+        }
+
+        else if (dIndex && inputs[(dIndex + 1)] != 0) {
             tempOp = inputs[(dIndex - 1)] / inputs[(dIndex + 1)]
             inputs.splice(dIndex - 1, 3, tempOp)
         }
     }
+
     //ADDITION
     for (let i = 0; i <= inputs.length; i++) {
         let aIndex = inputs.indexOf('+')
